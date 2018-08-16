@@ -17,9 +17,16 @@ Cart.prototype.saveToLocalStorage = function() {
   localStorage.setItem('cartItems', JSON.stringify(this.items));
 };
 
-Cart.prototype.removeItem = function(item) {
+Cart.prototype.removeItem = function(productName) {
   // TODO: Fill in this instance method to remove one item from the cart.
   // Note: You will have to decide what kind of parameter to pass in here!
+  var index = -1;
+  for(var i=0; i < this.items.length; i++){
+    if(this.items[i].product == productName){
+      index = i;
+    }
+  }
+  this.items.splice(index, 1);
 };
 
 var CartItem = function(product, quantity) {
@@ -112,8 +119,6 @@ function displayConfirmationMessage(){
   confirmationMessageSection.appendChild(confirmationMessage);
 }
 
-
-
 // Initialize the app by creating the big list of products with images and names
 generateCatalog();
 // Add product options to dropdown
@@ -128,12 +133,12 @@ if(submitItemChoice){
   submitItemChoice.addEventListener('submit', addItemSelectionToCart);
 }
 
+// Add event listener to save cart contents to local storage to
+// 'Cart' link
 var navigateToCart = document.querySelector('nav ul li:last-child');
 navigateToCart.addEventListener('click', function(){
   customerCart.saveToLocalStorage();
 });
 
 
-// Add event listener to save cart contents to local storage to all
-// 'Cart' links
 
