@@ -7,9 +7,7 @@ var cart;
 
 function loadCart() {
   var cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
-  console.log(cartItems);
   cart = new Cart(cartItems);
-  console.log(cart.items);
 }
 
 // Make magic happen --- re-pull the Cart, clear out the screen and re-draw it
@@ -21,14 +19,16 @@ function renderCart() {
 
 // TODO: Remove all of the rows (tr) in the cart table (tbody)
 function clearCart() {
-
+  var tableBody = document.querySelector('#cart tbody');
+  var newTableBody = document.createElement('tbody');
+  tableBody.parentNode.replaceChild(newTableBody, tableBody);
 }
 
 // TODO: Fill in the <tr>'s under the <tbody> for each item in the cart
 function showCart() {
 
   // TODO: Find the table body
-  var tableBody = document.querySelector('#cart tbody'); 
+  var tableBody = document.querySelector('#cart tbody');
   // TODO: Iterate over the items in the cart
   // TODO: Create a TR
   // TODO: Create a TD for the delete link, quantity,  and the item
@@ -54,13 +54,14 @@ function removeItemFromCart(event) {
   // TODO: When a delete link is clicked, use cart.removeItem to remove the correct item
   var productClicked = event.target.id;
   console.log(productClicked);
-  // if(productClicked){
-
-  // }
+  if(productClicked){
+    cart.removeItem(productClicked);
+  }
 
   // TODO: Save the cart back to local storage
+  cart.saveToLocalStorage();
   // TODO: Re-draw the cart table
-
+  renderCart();
 }
 
 // This will initialize the page and draw the cart on screen
