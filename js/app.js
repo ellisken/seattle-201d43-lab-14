@@ -14,6 +14,7 @@ Cart.prototype.addItem = function(product, quantity) {
 
 Cart.prototype.saveToLocalStorage = function() {
   // TODO: Fill in this instance method to save the contents of the cart to localStorage
+  localStorage.setItem('cartItems', JSON.stringify(this.items));
 };
 
 Cart.prototype.removeItem = function(item) {
@@ -105,12 +106,12 @@ function displayConfirmationMessage(){
   var confirmationMessageSection = document.createElement('section');
   mainElement.appendChild(confirmationMessageSection);
   var confirmationMessage = document.createElement('p');
-  
 
   //Add confirmation text and link to cart
-  confirmationMessage.innerHTML = 'Added to cart! <a href="cart.html">See shopping cart.</a>';
+  confirmationMessage.innerHTML = 'Added to cart!';
   confirmationMessageSection.appendChild(confirmationMessage);
 }
+
 
 
 // Initialize the app by creating the big list of products with images and names
@@ -119,11 +120,20 @@ generateCatalog();
 addProductsToDropdownMenu();
 
 // Create cart Object
-var items = [];
-var customerCart = new Cart(items);
+var customerCart = new Cart([]);
 
 // Add event listener to submit button
 var submitItemChoice = document.getElementById('catalog');
 if(submitItemChoice){
   submitItemChoice.addEventListener('submit', addItemSelectionToCart);
 }
+
+var navigateToCart = document.querySelector('nav ul li:last-child');
+navigateToCart.addEventListener('click', function(){
+  customerCart.saveToLocalStorage();
+});
+
+
+// Add event listener to save cart contents to local storage to all
+// 'Cart' links
+
