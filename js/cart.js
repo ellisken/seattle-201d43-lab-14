@@ -66,8 +66,3 @@ function removeItemFromCart(event) {
 
 // This will initialize the page and draw the cart on screen
 renderCart();
-
-// Create an event listener so that when the delete link is clicked, the removeItemFromCart method is invoked.
-// var table = document.getElementById('cart');
-// table.addEventListener('click', removeItemFromCart);
-// For each td

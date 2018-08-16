@@ -65,80 +65,9 @@ function generateCatalog() {
   new Product('img/wine-glass.jpg', 'Wine Glass');
 }
 
-// Function to add all product names to dropdown menu
-function addProductsToDropdownMenu(){
-  // Grab select element
-  var selectMenu = document.getElementById('items')
-  if(selectMenu){
-    // For each product in allProducts, create option element
-    // Set value = product.name, set innerText = product.name
-    // append to select element
-    for(var i=0; i < Product.allProducts.length; i++){
-      var productOption = document.createElement('option');
-      productOption.value = Product.allProducts[i].name;
-      productOption.textContent = Product.allProducts[i].name;
-      selectMenu.appendChild(productOption);
-    }
-    // Set default dropdown item to blank
-    var itemName = document.getElementById('items');
-    itemName.value = '';
-  }
-}
-
-
-// Event handler for submitting new cart item
-function addItemSelectionToCart(e){
-  e.preventDefault();
-  //Get value for quantity selected
-  var itemQty = document.getElementById('quantity');
-  //If no qty specified, do not add to cart
-  if(itemQty < 1){
-    return;
-  }
-  //Get value for item selected
-  var itemName = document.getElementById('items');
-  //Instantiate new cartItem and add to Cart
-  customerCart.addItem(itemName.value, itemQty.value);
-  //Reset form values
-  itemQty.value = '';
-  itemName.value = '';
-  //Display confirmation message
-  displayConfirmationMessage();
-}
-
-// Add animated submit message to the main
-function displayConfirmationMessage(){
-  //Add confirmation section to main
-  var mainElement = document.querySelector('main');
-  var confirmationMessageSection = document.createElement('section');
-  mainElement.appendChild(confirmationMessageSection);
-  var confirmationMessage = document.createElement('p');
-
-  //Add confirmation text and link to cart
-  confirmationMessage.innerHTML = 'Added to cart!';
-  confirmationMessageSection.appendChild(confirmationMessage);
-}
 
 // Initialize the app by creating the big list of products with images and names
 generateCatalog();
-// Add product options to dropdown
-addProductsToDropdownMenu();
-
-// Create cart Object
-var customerCart = new Cart([]);
-
-// Add event listener to submit button
-var submitItemChoice = document.getElementById('catalog');
-if(submitItemChoice){
-  submitItemChoice.addEventListener('submit', addItemSelectionToCart);
-}
-
-// Add event listener to save cart contents to local storage to
-// 'Cart' link
-var navigateToCart = document.querySelector('nav ul li:last-child');
-navigateToCart.addEventListener('click', function(){
-  customerCart.saveToLocalStorage();
-});
 
 
 
