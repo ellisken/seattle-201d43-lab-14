@@ -1,7 +1,6 @@
 /* global Cart */
 'use strict';
 
-// Create an event listener so that when the delete link is clicked, the removeItemFromCart method is invoked.
 var table = document.getElementById('cart');
 table.addEventListener('click', removeItemFromCart);
 var cart;
@@ -36,13 +35,14 @@ function showCart() {
   // TODO: Add the TR to the TBODY and each of the TD's to the TR
   for(var i=0; i < cart.items.length; i++){
     var itemRow = document.createElement('tr');
-    var itemDeleteButton = document.createElement('td');
-
+    var itemDelete = document.createElement('td');
+    itemDelete.innerText = 'X';
+    itemDelete.id = cart.items[i].product;
     var itemQty = document.createElement('td');
     itemQty.innerText = cart.items[i].quantity;
     var itemName = document.createElement('td');
     itemName.innerText = cart.items[i].product;
-    itemRow.appendChild(itemDeleteButton);
+    itemRow.appendChild(itemDelete);
     itemRow.appendChild(itemQty);
     itemRow.appendChild(itemName);
     tableBody.appendChild(itemRow);
@@ -52,6 +52,12 @@ function showCart() {
 function removeItemFromCart(event) {
 
   // TODO: When a delete link is clicked, use cart.removeItem to remove the correct item
+  var productClicked = event.target.id;
+  console.log(productClicked);
+  // if(productClicked){
+
+  // }
+
   // TODO: Save the cart back to local storage
   // TODO: Re-draw the cart table
 
@@ -59,3 +65,8 @@ function removeItemFromCart(event) {
 
 // This will initialize the page and draw the cart on screen
 renderCart();
+
+// Create an event listener so that when the delete link is clicked, the removeItemFromCart method is invoked.
+// var table = document.getElementById('cart');
+// table.addEventListener('click', removeItemFromCart);
+// For each td
