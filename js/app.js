@@ -60,19 +60,21 @@ function generateCatalog() {
 // Function to add all product names to dropdown menu
 function addProductsToDropdownMenu(){
   // Grab select element
-  var selectMenu = document.getElementById('items');
-  // For each product in allProducts, create option element
-  // Set value = product.name, set innerText = product.name
-  // append to select element
-  for(var i=0; i < Product.allProducts.length; i++){
-    var productOption = document.createElement('option');
-    productOption.value = Product.allProducts[i].name;
-    productOption.textContent = Product.allProducts[i].name;
-    selectMenu.appendChild(productOption);
+  var selectMenu = document.getElementById('items')
+  if(selectMenu){
+    // For each product in allProducts, create option element
+    // Set value = product.name, set innerText = product.name
+    // append to select element
+    for(var i=0; i < Product.allProducts.length; i++){
+      var productOption = document.createElement('option');
+      productOption.value = Product.allProducts[i].name;
+      productOption.textContent = Product.allProducts[i].name;
+      selectMenu.appendChild(productOption);
+    }
+    // Set default dropdown item to blank
+    var itemName = document.getElementById('items');
+    itemName.value = '';
   }
-  // Set default dropdown item to blank
-  var itemName = document.getElementById('items');
-  itemName.value = '';
 }
 
 
@@ -85,15 +87,29 @@ function addItemSelectionToCart(e){
   if(itemQty < 1){
     return;
   }
-  // console.log(itemQty.value);
   //Get value for item selected
   var itemName = document.getElementById('items');
-  // console.log(itemName.value);
   //Instantiate new cartItem and add to Cart
   customerCart.addItem(itemName.value, itemQty.value);
   //Reset form values
   itemQty.value = '';
   itemName.value = '';
+  //Display confirmation message
+  displayConfirmationMessage();
+}
+
+// Add animated submit message to the main
+function displayConfirmationMessage(){
+  //Add confirmation section to main
+  var mainElement = document.querySelector('main');
+  var confirmationMessageSection = document.createElement('section');
+  mainElement.appendChild(confirmationMessageSection);
+  var confirmationMessage = document.createElement('p');
+  
+
+  //Add confirmation text and link to cart
+  confirmationMessage.innerHTML = 'Added to cart! <a href="cart.html">See shopping cart.</a>';
+  confirmationMessageSection.appendChild(confirmationMessage);
 }
 
 
@@ -101,10 +117,13 @@ function addItemSelectionToCart(e){
 generateCatalog();
 // Add product options to dropdown
 addProductsToDropdownMenu();
+
 // Create cart Object
 var items = [];
 var customerCart = new Cart(items);
 
 // Add event listener to submit button
 var submitItemChoice = document.getElementById('catalog');
-submitItemChoice.addEventListener('submit', addItemSelectionToCart);
+if(submitItemChoice){
+  submitItemChoice.addEventListener('submit', addItemSelectionToCart);
+}
