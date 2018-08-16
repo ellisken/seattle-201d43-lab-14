@@ -8,6 +8,8 @@ var Cart = function(items) {
 
 Cart.prototype.addItem = function(product, quantity) {
   // TODO: Fill in this instance method to create a new CartItem and add it to this.items
+  var newCartItem = new CartItem(product, quantity);
+  this.items.push(newCartItem);
 };
 
 Cart.prototype.saveToLocalStorage = function() {
@@ -20,8 +22,8 @@ Cart.prototype.removeItem = function(item) {
 };
 
 var CartItem = function(product, quantity) {
-  this.product = product;
-  this.quantity = quantity;
+  this.product = product; //Product object
+  this.quantity = quantity; //Number
 };
 
 // Product contructor.
@@ -55,9 +57,6 @@ function generateCatalog() {
   new Product('img/wine-glass.jpg', 'Wine Glass');
 }
 
-// Initialize the app by creating the big list of products with images and names
-generateCatalog();
-
 // Function to add all product names to dropdown menu
 function addProductsToDropdownMenu(){
   // Grab select element
@@ -71,4 +70,41 @@ function addProductsToDropdownMenu(){
     productOption.textContent = Product.allProducts[i].name;
     selectMenu.appendChild(productOption);
   }
+  // Set default dropdown item to blank
+  var itemName = document.getElementById('items');
+  itemName.value = '';
 }
+
+
+// Event handler for submitting new cart item
+function addItemSelectionToCart(e){
+  e.preventDefault();
+  //Get value for quantity selected
+  var itemQty = document.getElementById('quantity');
+  //If no qty specified, do not add to cart
+  if(itemQty < 1){
+    return;
+  }
+  // console.log(itemQty.value);
+  //Get value for item selected
+  var itemName = document.getElementById('items');
+  // console.log(itemName.value);
+  //Instantiate new cartItem and add to Cart
+  customerCart.addItem(itemName.value, itemQty.value);
+  //Reset form values
+  itemQty.value = '';
+  itemName.value = '';
+}
+
+
+// Initialize the app by creating the big list of products with images and names
+generateCatalog();
+// Add product options to dropdown
+addProductsToDropdownMenu();
+// Create cart Object
+var items = [];
+var customerCart = new Cart(items);
+
+// Add event listener to submit button
+var submitItemChoice = document.getElementById('catalog');
+submitItemChoice.addEventListener('submit', addItemSelectionToCart);
