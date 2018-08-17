@@ -22,7 +22,7 @@ Cart.prototype.removeItem = function(productName) {
   // Note: You will have to decide what kind of parameter to pass in here!
   var index = -1;
   for(var i=0; i < this.items.length; i++){
-    if(this.items[i].product == productName){
+    if(this.items[i].product === productName){
       index = i;
     }
   }

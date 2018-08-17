@@ -9,7 +9,7 @@ var cart = new Cart([]);
 // (the things in the Product.allProducts array) into the drop down list.
 function populateForm() {
   // Grab selected element
-  var selectMenu = document.getElementById('items')
+  var selectMenu = document.getElementById('items');
   if(selectMenu){
     // For each product in allProducts, create option element
     // Set value = product.name, set innerText = product.name
@@ -46,7 +46,7 @@ function addSelectedItemToCart() {
   // TODO: suss out the item picked from the select list
   // TODO: get the quantity
   // TODO: using those, add one item to the Cart
-   //Get value for quantity selected
+  //Get value for quantity selected
   var itemQty = document.getElementById('quantity');
   //If no qty specified, do not add to cart
   if(itemQty < 1){
